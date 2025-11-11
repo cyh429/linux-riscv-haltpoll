@@ -85,3 +85,13 @@ do {									\
 #endif /* __ASSEMBLER__ */
 
 #endif /* _ASM_RISCV_BARRIER_H */
+
+
+#define SMP_TIMEOUT_POLL_COUNT  1
+
+#ifdef CONFIG_RISCV_ZAWRS
+#include <asm/wait.h>  /* provides __cmpwait_relaxed() */
+#define cpu_poll_relax(ptr, val)    __cmpwait_relaxed(ptr, val
+#else
+#define cpu_poll_relax(ptr, val)    cpu_relax()
+#endif
